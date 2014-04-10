@@ -9,21 +9,21 @@ var balance = 1000;
 var input = query();
 
 while(!quit()){
-  if(input === 'd'){
+  if(input === 'd'){ //deposit handling
     var deposit = dQuery();
     deposit = dBonus(deposit);
     balance += deposit;
     console.log('Balance after deposit=' + balance);
-  }else if(input === 'w'){
+  }else if(input === 'w'){ //withdraw handling
     var withdraw = wQuery();
     withdraw = wFee(withdraw);
     balance -= withdraw;
     console.log('Balance after withdraw =' + balance);
-    if(!accValid()){
+    if(!accValid()){ //account close
       alert("You withdrew too much!")
       break;
     }//end overdraft
-  }else{
+  }else{ //improper input
     alert("You entered an invalid command.")
   }
 
@@ -37,7 +37,13 @@ function query(){
 }
 
 function dQuery(){
-  return prompt('How much would you like to deposit?') * 1;
+  var num = prompt('How much would you like to deposit?') * 1;
+  if(num < 0){
+    alert('Neg numbers are not valid');
+    num = 0;
+    num = dQuery();
+  }
+  return num;
 }
 
 function dBonus(deposit){
@@ -48,7 +54,13 @@ function dBonus(deposit){
 }
 
 function wQuery(){
-  return prompt('How much would you like to withdraw?') * 1;
+  var num = prompt('How much would you like to withdraw?') * 1;
+  if(num < 0){
+    alert('Neg numbers are not valid');
+    num = 0;
+    num = wQuery();
+  }
+  return num;
 }
 
 function wFee(withdraw){
